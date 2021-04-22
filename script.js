@@ -140,13 +140,13 @@ function bubbleSort(){
 }
 
 sorted=()=>{
-  // elementsContainer.innerHTML="";
+  elementsContainer.innerHTML="";
   numbers.forEach((number,id)=>{
 
     
       let elementNode=document.createElement("div");
     elementNode.classList.add("element");
-    elementNode.classList.add("red");
+    elementNode.classList.add("green");
     elementNode.style.height=`${number}px`;
     elementNode.innerText=`${number}`;
     elementsContainer.appendChild(elementNode);
@@ -214,6 +214,13 @@ sortBtn.addEventListener("click",()=>{
       }
 
       setTimeout(()=>{
+
+        
+        setTimeout(()=>{
+          elementsDom[animations[i][0]].classList.add("yellow");
+        elementsDom[animations[i][1]].classList.add("yellow");
+        },100);
+        
                 
 
         // elementsDom[animations[i][0]].classList.add("yellow");
@@ -221,35 +228,46 @@ sortBtn.addEventListener("click",()=>{
         // elementsDom[animations[i][1]].classList.remove("yellow");
         // elementsDom[animations[i][0]].classList.remove("yellow");
         if(animations[i][2]===true){
+          elementsDom[animations[i][0]].style.height=`${numbers[animations[i][1]]}px`;
+          elementsDom[animations[i][1]].style.height=`${numbers[animations[i][0]]}px`;
+
+          elementsDom[animations[i][0]].innerText=`${numbers[animations[i][1]]}px`;
+          elementsDom[animations[i][1]].innerText=`${numbers[animations[i][0]]}px`;
+
           console.log(animations[i][0]," ",animations[i][1]);
           let temp=numbers[animations[i][0]];
           numbers[animations[i][0]]=numbers[animations[i][1]];
           numbers[animations[i][1]]=temp;
           // [numbers[animations[i][0]],numbers[animations[i][1]]]=[numbers[animations[i][1]],numbers[animations[i][0]]]
+
+
           
         }
-        else{
-          elementsDom[animations[i][0]].classList.add("green");
-          elementsDom[animations[i][1]].classList.add("green");
+        setTimeout(()=>{
+          elementsDom[animations[i][0]].classList.remove("yellow");
+        elementsDom[animations[i][1]].classList.remove("yellow");
+        },100);
 
-        }
-        elementsDom[animations[i][0]].classList.add("green");
-        elementsDom[animations[i][1]].classList.add("green");
+        
+        
 
-        updateDom();
+
+
+        // updateDom();
         i++;
         count++;
               
       
 
 
-      },50);
+      },100);
+
 
 
       
       
 
-    },50)
+    },100)
   }
   catch(err){
     // clearInterval(loop);
