@@ -85,6 +85,7 @@ select:focus {
   margin: 0 2px;
   flex-grow: 0.1; /* to fill space in between */
   color: white;
+  font-weight: 700;
   text-align: center;
 }
 

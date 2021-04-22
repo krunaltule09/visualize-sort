@@ -1,5 +1,5 @@
 const numElements=document.getElementById("numElements");
-const speed=document.getElementById("numElements");
+const speedEl=document.getElementById("speed");
 
 const algorithm=document.getElementById("algorithm");
 
@@ -8,6 +8,7 @@ const elementsContainer=document.getElementById('elements');
 const sortBtn=document.getElementById("sort");
 
 
+var speed=speedEl.value;
 
 
 
@@ -181,6 +182,12 @@ function makeEnable(){
 // event listeners
 
 
+speedEl.addEventListener("change",(e)=>{
+  speed=e.target.value;
+  console.log(speed);
+  
+})
+
 numElements.addEventListener("change",(e)=>{
 
   for(let i=0;i<numberOfElements;i++){
@@ -216,10 +223,11 @@ sortBtn.addEventListener("click",()=>{
       setTimeout(()=>{
 
         
-        setTimeout(()=>{
-          elementsDom[animations[i][0]].classList.add("yellow");
-        elementsDom[animations[i][1]].classList.add("yellow");
-        },100);
+        elementsDom[animations[i][0]].classList.remove("yellow");
+        elementsDom[animations[i][1]].classList.remove("yellow");
+          elementsDom[animations[i][0]].classList.add("red");
+        elementsDom[animations[i][1]].classList.add("red");
+        
         
                 
 
@@ -227,12 +235,15 @@ sortBtn.addEventListener("click",()=>{
         // elementsDom[animations[i][1]].classList.add("yellow");
         // elementsDom[animations[i][1]].classList.remove("yellow");
         // elementsDom[animations[i][0]].classList.remove("yellow");
+        setTimeout(()=>{
+          
+        },speed)
         if(animations[i][2]===true){
           elementsDom[animations[i][0]].style.height=`${numbers[animations[i][1]]}px`;
           elementsDom[animations[i][1]].style.height=`${numbers[animations[i][0]]}px`;
 
-          elementsDom[animations[i][0]].innerText=`${numbers[animations[i][1]]}px`;
-          elementsDom[animations[i][1]].innerText=`${numbers[animations[i][0]]}px`;
+          elementsDom[animations[i][0]].innerText=`${numbers[animations[i][1]]}`;
+          elementsDom[animations[i][1]].innerText=`${numbers[animations[i][0]]}`;
 
           console.log(animations[i][0]," ",animations[i][1]);
           let temp=numbers[animations[i][0]];
@@ -244,9 +255,12 @@ sortBtn.addEventListener("click",()=>{
           
         }
         setTimeout(()=>{
-          elementsDom[animations[i][0]].classList.remove("yellow");
-        elementsDom[animations[i][1]].classList.remove("yellow");
-        },100);
+          elementsDom[animations[i][0]].classList.remove("red");
+        elementsDom[animations[i][1]].classList.remove("red");
+
+        elementsDom[animations[i][0]].classList.add("yellow");
+        elementsDom[animations[i][1]].classList.add("yellow");
+        },speed);
 
         
         
@@ -260,14 +274,14 @@ sortBtn.addEventListener("click",()=>{
       
 
 
-      },100);
+      },speed);
 
 
 
       
       
 
-    },100)
+    },speed)
   }
   catch(err){
     // clearInterval(loop);
