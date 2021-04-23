@@ -1,5 +1,6 @@
 * {
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -16,7 +17,7 @@ body {
 .navbar {
   background-color: rgba(0, 0, 0, 0.8);
   font-size: 10px;
-  width: 100vw;
+  width: 100%;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -77,6 +78,11 @@ select:focus {
 
   padding: 7px 10px;
   border-radius: 10px;
+  border: 1px solid brown;
+}
+
+#randomize:focus {
+  outline: none;
 }
 
 .container {
@@ -108,7 +114,7 @@ select:focus {
 }
 
 .element.green {
-  background-color: forestgreen;
+  background-color: rgb(90, 235, 90);
 }
 
 .element.red {
@@ -116,28 +122,43 @@ select:focus {
 }
 
 .element.yellow {
-  background-color: yellow;
+  background-color: rgb(161, 161, 10);
 }
 
-#sort {
-  background-color: forestgreen;
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: row;
+  width: 100vw;
+}
+
+.sort {
+  background: transparent;
   color: #fff;
   border: none;
-  width: 20%;
-  margin-bottom: 10px;
+  text-decoration: none;
+  text-align: center;
 
-  font-size: 20px;
+  margin: 5px 5px;
+
+  font-size: 14px;
   padding: 10px 15px;
-  border-radius: 15px;
+  background-color: rgba(138, 125, 125, 0.2);
+  border-radius: 10px;
   cursor: pointer;
 }
 
-#sort:disabled {
-  background-color: rgba(138, 125, 125, 0.2);
+#randomize:disabled {
+  cursor: default;
+}
+
+.sort:disabled {
   color: #fff;
   cursor: default;
 }
 
-#sort:focus {
+.sort:focus {
   outline: none;
 }
