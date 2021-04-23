@@ -1,63 +1,30 @@
 const numElements=document.getElementById("numElements");
 const speedEl=document.getElementById("speed");
-
 const algorithm=document.getElementById("algorithm");
-
 const elementsContainer=document.getElementById('elements');
-
 const sortBtn=document.getElementById("sort");
-
-
+const randomize=document.getElementById("randomize");
 var speed=speedEl.value;
-
-
-
-
-
 let numberOfElements=numElements.value;
 let numbers=[];
-
-
-
-
-
-
-
-
-
 let elementsDom;
 
 mountDom();
 
 function updateDom(){
   elementsContainer.innerHTML="";
-   
   numbers.forEach((number,id)=>{
-
     let elementNode=document.createElement("div");
     elementNode.classList.add("element");
     elementNode.classList.add("normal");
     elementNode.style.height=`${number}px`;
     elementNode.innerText=`${number}`;
-   
-   
     elementsContainer.appendChild(elementNode);
-    // console.log(elementNode);
-
-
-
   })
 
 }
 
-
-
-
 function mountDom(){
-  
-  // console.log(numberOfElements);
-
-
   for(let i=0;i<numberOfElements;i++){
     numbers[i]=(Math.floor((Math.random() * 400) + 1));
   }
@@ -65,60 +32,20 @@ function mountDom(){
   elementsContainer.innerHTML="";
    
   numbers.forEach((number,id)=>{
-
     let elementNode=document.createElement("div");
     elementNode.classList.add("element");
     elementNode.classList.add("normal");
     elementNode.style.height=`${number}px`;
     elementNode.innerText=`${number}`;
     elementsContainer.appendChild(elementNode);
-    // console.log(elementNode);
-
-
-
   })
-
   elementsDom=document.querySelectorAll('.element');
-  
-
-  // console.log(numbers)
-
 }
 
 
-// function bubbleSort(){
-//   const elementArr=document.querySelectorAll(".element");
-//   let i=0,j=0;
-//   const outerloop=setInterval(()=>{
-//     j=0;
-//     if(i===numberOfElements-1){
-//       clearInterval(outerloop);
-//     }
-
-
-//     const innerloop=setInterval(()=>{
-//       [elementArr[j].style.height,elementArr[j+1].style.height]=[`${numbers[j]}px`,`${numbers[j+1]}px`];
-//       // console.log(j);
-//       j=j+1;
-//       if(j===numElements-i-1){
-//         clearInterval(innerloop);
-//       }
-//     },400)
-
-//     i=i+1;
-    
-//   },200)
-  
-  
-
-// }
-
-
 function bubbleSort(){
-  
   let auxillaryArray=[...numbers];
   const animations=[];
-  
   for(let i=0;i<numberOfElements-1;i++){
     for(let j=0;j<numberOfElements-i-1;j++){
       
@@ -134,26 +61,18 @@ function bubbleSort(){
 
     }
   }
-
   return animations;
-  
- 
 }
 
 sorted=()=>{
   elementsContainer.innerHTML="";
   numbers.forEach((number,id)=>{
-
-    
-      let elementNode=document.createElement("div");
+    let elementNode=document.createElement("div");
     elementNode.classList.add("element");
     elementNode.classList.add("green");
     elementNode.style.height=`${number}px`;
     elementNode.innerText=`${number}`;
-    elementsContainer.appendChild(elementNode);
-    
-   
-   
+    elementsContainer.appendChild(elementNode); 
   }) 
 
 }
@@ -161,19 +80,45 @@ sorted=()=>{
 function makeDisable(){
   sortBtn.disabled=true;
   numElements.disabled=true;
+  speedEl.disabled=true;
   algorithm.disabled=true;
+  // randomize.style.display=none;
 }
 
 function makeEnable(){
   sortBtn.disabled=false;
   numElements.disabled=false;
+  speedEl.disabled=false;
   algorithm.disabled=false;
+  // randomize.style.display=block;
 }
    
 
+function resetArray(arr){
+  let len=arr.length;
+  for(let i=0;i<len;i++){
+    arr.pop()
+
+  }
+}
 
 
+function addClass(domElement,color){
+  domElement.classList.add(color);
+}
 
+function removeClass(domElement,color){
+  domElement.classList.remove(color);
+}
+
+
+function setHeight(domElement,height){
+  domElement.style.height=`${height}px`;
+}
+
+function setText(domElement,height){
+  domElement.innerText=`${height}`;
+}
 
 
 
@@ -182,6 +127,10 @@ function makeEnable(){
 // event listeners
 
 
+randomize.addEventListener("click",()=>{
+  mountDom();
+})
+
 speedEl.addEventListener("change",(e)=>{
   speed=e.target.value;
   console.log(speed);
@@ -189,104 +138,60 @@ speedEl.addEventListener("change",(e)=>{
 })
 
 numElements.addEventListener("change",(e)=>{
-
-  for(let i=0;i<numberOfElements;i++){
-    numbers.pop();
-  }
-
+  resetArray(numbers);
   numberOfElements=e.target.value;
-  
   mountDom();
-
-
 })
 
 sortBtn.addEventListener("click",()=>{
     makeDisable();
-    console.log("hello");
-    
     const animations=bubbleSort();
-    // console.log(animations);
-    console.log(numbers);
     var i=0,count=0;
     try{
-
-
     var loop=setInterval(()=>{
-      if(i===animations.length-1){
+      if(i===animations.length){
         makeEnable();
         sorted();
         clearInterval(loop);
-        
       }
 
       setTimeout(()=>{
+        removeClass(elementsDom[animations[i][0]],"yellow");
+        removeClass(elementsDom[animations[i][1]],"yellow");
 
-        
-        elementsDom[animations[i][0]].classList.remove("yellow");
-        elementsDom[animations[i][1]].classList.remove("yellow");
-          elementsDom[animations[i][0]].classList.add("red");
-        elementsDom[animations[i][1]].classList.add("red");
-        
-        
-                
+        addClass(elementsDom[animations[i][0]],"red");
+        addClass(elementsDom[animations[i][1]],"red");
 
-        // elementsDom[animations[i][0]].classList.add("yellow");
-        // elementsDom[animations[i][1]].classList.add("yellow");
-        // elementsDom[animations[i][1]].classList.remove("yellow");
-        // elementsDom[animations[i][0]].classList.remove("yellow");
-        setTimeout(()=>{
-          
-        },speed)
         if(animations[i][2]===true){
-          elementsDom[animations[i][0]].style.height=`${numbers[animations[i][1]]}px`;
-          elementsDom[animations[i][1]].style.height=`${numbers[animations[i][0]]}px`;
 
-          elementsDom[animations[i][0]].innerText=`${numbers[animations[i][1]]}`;
-          elementsDom[animations[i][1]].innerText=`${numbers[animations[i][0]]}`;
+          // updating dom bar
+          setHeight(elementsDom[animations[i][0]],numbers[animations[i][1]]);
+          setHeight(elementsDom[animations[i][1]],numbers[animations[i][0]]);
+          
+          // updating dom text
+          setText(elementsDom[animations[i][0]],numbers[animations[i][1]]);
+          setText(elementsDom[animations[i][1]],numbers[animations[i][0]]);
 
-          console.log(animations[i][0]," ",animations[i][1]);
+          // actual swapping of numbers in array
           let temp=numbers[animations[i][0]];
           numbers[animations[i][0]]=numbers[animations[i][1]];
           numbers[animations[i][1]]=temp;
-          // [numbers[animations[i][0]],numbers[animations[i][1]]]=[numbers[animations[i][1]],numbers[animations[i][0]]]
-
-
-          
+ 
         }
         setTimeout(()=>{
-          elementsDom[animations[i][0]].classList.remove("red");
-        elementsDom[animations[i][1]].classList.remove("red");
+          removeClass(elementsDom[animations[i][0]],"red");
+          removeClass(elementsDom[animations[i][1]],"red");
 
-        elementsDom[animations[i][0]].classList.add("yellow");
-        elementsDom[animations[i][1]].classList.add("yellow");
+          addClass(elementsDom[animations[i][0]],"yellow");
+          addClass(elementsDom[animations[i][1]],"yellow"); 
         },speed);
-
-        
-        
-
-
-
-        // updateDom();
         i++;
         count++;
-              
-      
-
-
       },speed);
-
-
-
-      
-      
-
     },speed)
   }
   catch(err){
-    // clearInterval(loop);
     makeEnable();
-    // console.log(err);
   }
   
 })
